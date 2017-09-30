@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="ws_ps_tender_round_view" model="ir.ui.view">
+            <field name="name">招标轮次视图</field>
+            <field name="model">ws.ps.tender.round</field>
+            <field name="arch" type="xml">
+                <tree string="询价单">
+                    <field name="procurement_solution_id" />
+                    <field name="name" readonly="1"/>
+                    <field name="round_order" readonly="1"/>
+                    <field name="start_time"/>
+                    <field name="end_time"/>
+                    <field name="remark"/>
+                    <field name="finished" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="ws_ps_tender_round_form" model="ir.ui.view">
+            <field name="name">招标轮次视图</field>
+            <field name="model">ws.ps.tender.round</field>
+            <field name="arch" type="xml">
+                <form string="招标轮次">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="start_time"/>
+                                <field name="remark"/>
+                            </group>
+                            <group>
+                                <field name="round_order" readonly="1"/>
+                                <field name="end_time"/>
+                                <field name="finished" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="参标明细">
+                                <field name="line_ids">
+                                    <tree editable="bottom">
+                                        <field name="supplier_id"/>
+                                        <field name="material_id"/>
+                                        <field name="contract_person"/>
+                                        <field name="phone"/>
+                                        <field name="send"/>
+                                        <field name="answer"/>
+                                        <field name="out_price"/>
+                                        <field name="in_price"/>
+                                        <field name="tran_cost"/>
+                                        <field name="amount"/>
+                                        <field name="inquiry_time"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ws_ps_tender_round" model="ir.actions.act_window">
+            <field name="name">招标轮次</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ws.ps.tender.round</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ws_ps_tender_round_view" />
+        </record>
+    </data>
+</odoo>

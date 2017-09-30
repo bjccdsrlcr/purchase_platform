@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>温氏招标报价详情</title>
+    <style type="text/css">
+     #title{text-align:center;font-family:隶书;font-size:24px;font-weight:bold;margin-top:20px;margin-bottom:30px}
+      #bt_attend{margin-top:50px;}
+      #timer{color:red;font-size:20px}
+      button, input, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit;
+            width: 100%;
+        }
+    </style>
+    <link rel="stylesheet" href="/ws_purchase_supplier/static/css/bootstrap.css">
+    <script type="text/javascript" src="/ws_purchase_supplier/static/js/countdown.js"></script>
+
+</head>
+<body>
+<div class="container">
+	<div class="row clearfix">
+        <div id="title" align="center">{{data.iline.material_id.name}}应标</div>
+		<div   class="col-md-12 column">
+            <div  class="row clearfix">
+		        <div style="background-color:#87CEFA" class="col-md-6 column">
+                    <span style="font-size:20px;margin-left:20px">距离本轮招标截止还剩:</span><br>
+                    <span style="font-size:20px;margin-left:20px" id="timer">  </span>
+		        </div>
+                <div class="row clearfix">
+                    <div class="col-md-12 column">
+                        <div id="rules" class="list-group-item" style="font-size:20px">
+                         {{data.provider.procurement_solution_id.announcement}}
+                        </div>
+                        <form action="/ws/wx/provider_save" onsubmit="return valid_Form()">
+                            <input type="hidden" id="end_time" name="end_time" value="{{data.provider.end_time}}"/>
+                            <input type="hidden" id="solutionid" name="solutionid" value="{{data.provider.procurement_solution_id.id}}"/>
+                            <input type="hidden" id="providerid" name="providerid" value="{{data.provider.id}}"/>
+                            <input type="hidden" id="materialid" name="materialid" value="{{data.iline.material_id.id}}"/>
+                            <input type="hidden" id="lineid" name="lineid" value="{{data.iline.id}}"/>
+                            <input type="hidden" id="placeid" name="placeid" value="{{data.iline.trading_place_id.id}}"/>
+                            <input type="hidden" id="uom_id" name="uom_id" value="{{data.iline.uom_id.id}}" />
+                            <ul class="list-group">
+                             <li class="list-group-item">
+                                 <div style="font-size:25px;font-weight:bold" align="center">{{data.iline.trading_place_id.name}}</div>
+                             </li>
+                             <li class="list-group-item">
+                                 <div>
+                                     <label style="font-size:20px" >交货地报价:</label><br/>
+                                     <input type="text" id="out_price" name="out_price" width="100%" value="{{data.iline.out_price}}" />
+                                 </div>
+                                 <div>
+                                     <label style="font-size:20px" >到厂单价</label><br/>
+                                     <input type="text" id="in_price" name="in_price" width="100%" value="{{data.iline.in_price}}" />
+                                 </div>
+                                 <div>
+                                     <label style="font-size:20px" >运费</label><br/>
+                                     <input type="text" id="tran_cost" name="tran_cost" width="100%" value="{{data.iline.tran_cost}}" />
+                                 </div>
+                                 <div>
+                                     <label style="font-size:20px" >可供数量({{data.iline.uom_id.name}})</label><br/>
+                                     <input type="text" id="amount" name="amount" width="100%" value="{{data.iline.amount}}" />
+                                 </div>
+                                 <div>
+                                     <label style="font-size:20px" >备注</label><br/>
+                                     <input type="text" id="remark" name="remark" width="100%" value="{{data.iline.remark}}" />
+                                 </div>
+                             </li>
+                            </ul>
+                            <div id="bt_attend" align="center">
+                                <button type="submit" class="btn btn-primary btn-lg">提交</button>
+			                </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+
+<script>
+    var interval = 1000;
+    function ShowCountDown() {
+        var timer = document.getElementById("timer");
+        var end_time=document.getElementById("end_time").value;
+        end_time = end_time.replace(/\-/g, "/");
+        var now = new Date();
+        var endDate = new Date(end_time);
+        var leftTime=endDate.getTime()-now.getTime();
+        if(leftTime<=0){
+            timer.innerHTML = "已结束";
+            return;
+        }
+        var leftsecond = parseInt(leftTime/1000);
+        var day1=Math.floor(leftsecond/(60*60*24));
+        var hour=Math.floor((leftsecond-day1*24*60*60)/3600);
+        var minute=Math.floor((leftsecond-day1*24*60*60-hour*3600)/60);
+        var second=Math.floor(leftsecond-day1*24*60*60-hour*3600-minute*60);
+        timer.innerHTML = day1+"天"+hour+"小时"+minute+"分"+second+"秒";
+    }
+    window.setInterval(function(){ShowCountDown();}, interval);
+</script>
+<script>
+    function valid_Form(){
+        return true;
+    }
+</script>
+
+</body>
+</html>

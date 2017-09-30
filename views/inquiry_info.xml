@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="ws_ps_inquiry_info_tree" model="ir.ui.view">
+            <field name="name">询价方案列表视图</field>
+            <field name="model">ws.ps.inquiry.info</field>
+            <field name="arch" type="xml">
+                <tree string="询价方案" colors="grey:state in ('draft');black:state in ('submit');blue:state in ('released');red:state in ('done');">
+                    <field name="name" string="询价方案编号"/>
+                    <field name="org_id" string="采购组织"/>
+                    <field name="inquiry_person_id" string="询价人"/>
+                    <field name="delivery_category_id" string="交货类型"/>
+                    <field name="material_id" string="询价物料"/>
+                    <field name="uom_id" string="计量单位"/>
+                    <field name="delivery_type_id" string="交货方式"/>
+                    <field name="start_time" string="询价开始时间"/>
+                    <field name="end_time" string="询价结束时间"/>
+                    <field name="quality_id" string="质量标准名称"/>
+                    <field name="quality_text" string="质量指标描述"/>
+                    <field name="remark" string="备注"/>
+                    <field name="state" string="状态"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="search_ws_ps_inquiry_info" model="ir.ui.view">
+            <field name="name">search.ws_ps_inquiry_info</field>
+            <field name="model">ws.ps.inquiry.info</field>
+            <field name="arch" type="xml">
+                <search string="询价方案查询">
+                    <filter string="本年" name="year" domain="[('start_time','&lt;=', time.strftime('%%Y-12-31')),('start_time','&gt;=',time.strftime('%%Y-01-01'))]" help="选择本年的订单"/>
+                    <separator/>
+                    <filter string="本月" name="month" domain="[('start_time','&lt;=', time.strftime('%Y-%m-%d')),('start_time','&gt;=',time.strftime('%Y-%m-01'))]" help="选择本月订单"/>
+                    <separator/>
+                    <filter string="当天" name="day" domain="[('start_time','&lt;=', time.strftime('%Y-%m-%d')),('start_time','&gt;=',time.strftime('%Y-%m-%d'))]" help="选择当天订单"/>
+                    <separator/>
+                    <field string="询价方案" name="name" filter_domain="['|', '|', ('name','ilike',self),('delivery_type_id','ilike', self),('material_id','ilike',self)]"/>
+                    <separator/>
+                    <field string = "交货方式" name="delivery_type_id" domain="[('delivery_type_id','ilike', self)]"/>
+                    <group expand="1" string="分组">
+                        <filter string="交货方式" context="{'group_by':'delivery_type_id'}" help="按交货方式分组"/>
+                        <separator/>
+                        <filter string="月份" context="{'group_by':'start_time:month'}" help="按月份分组"/>
+                        <separator/>
+                        <filter string="物料" context="{'group_by':'material_id'}" help="按物料分组"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="ws_ps_inquiry_info_form" model="ir.ui.view">
+            <field name="name">询价方案编辑视图</field>
+            <field name="model">ws.ps.inquiry.info</field>
+            <field name="arch" type="xml">
+                <form string="询价方案">
+                    <header>
+                        <button name="action_release" states="submit" type="object" class="oe_highlight" string="发布"/>
+                        <button name="action_un_release" states="released" type="object" class="oe_highlight" string="取消发布"/>
+                        <button name="action_done" states="released" type="object" class="oe_highlight" string="完成"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,release,done" readonly="1"/>
+                    </header>
+                    <sheet>
+                        <group name="group_top" col="4">
+                            <field name="name"/>
+                            <field name="inquiry_person_id"/>
+                            <field name="org_id"/>
+                            <field name="delivery_type_id" options="{'no_create': True}"/>
+                            <field name="delivery_category_id" options="{'no_create': True}"/>
+                            <field name="material_id"/>
+                            <field name="uom_id"/>
+                            <field name="qty" />
+                            <field name="quality_id" options="{'no_create': True}"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                            <field name="quality_text"/>
+                            <field name="remark"/>
+                        </group>
+                        <notebook>
+                            <page string="报价明细">
+                                <field name="line_ids">
+                                    <tree editable="bottom" create="false" delete="false">
+                                        <field name="supplier_id"/>
+                                        <field name="origin_place_id"/>
+                                        <field name="package"/>
+                                        <field name="delivery_type_id" options="{'no_create': True}"/>
+                                        <field name="delivery_category_id" options="{'no_create': True}"/>
+                                        <field name="trading_place_id"/>
+                                        <field name="out_price"/>
+                                        <field name="delivery_period_id" options="{'no_create': True}"/>
+                                        <field name="contract_num_id"/>
+                                        <field name="basediff"/>
+                                        <field name="tran_cost" invisible="1"/>
+                                        <field name="in_price" invisible="1"/>
+                                        <field name="amount"/>
+                                        <field name="uom_id"/>
+                                        <field name="inquiry_time"/>
+                                        <field name="remark"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="供应商报价列表">
+                                <field name="supplier_ids">
+                                    <tree editable="bottom">
+                                        <field name="supplier_id" options="{'no_create':True, 'no_open':True}"/>
+                                        <field name="contract_person"/>
+                                        <field name="phone"/>
+                                        <!--<field name="trading_place_id" widget="many2many_tags" options="{'no_create':True,'no_open':True}"/>-->
+                                        <field name="send"/>
+                                        <field name="answer"/>
+                                        <field name="remark"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ws_ps_inquiry_info" model="ir.actions.act_window">
+            <field name="name">询价方案</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ws.ps.inquiry.info</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="ws_ps_inquiry_info_tree" />
+            <field name="context">{'tree_view_ref': 'ws_purchase_solution.ws_ps_inquiry_info_tree', 'form_view_ref': 'ws_purchase_solution.ws_ps_inquiry_info_form', 'group_by':'delivery_type_id'}</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    点击“创建”增加询价方案
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

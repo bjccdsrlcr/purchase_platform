@@ -1,0 +1,16 @@
+.key-board div[class*="col-"] {
+    background: #fff;
+    text-align: center;
+    color: #000;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: large;
+}
+
+.key-board .number-button {
+    color: red;
+}
+
+.key-board .number-button.active-state {
+    background: #b2b2b2;
+}

@@ -1,0 +1,176 @@
+
+	<div class="view view-main">
+		<div class="pages">
+			<div data-page="home1" class="page navbar-fixed">
+				<div class="navbar-inner">
+					<div class="left">
+						<a href="#" class="link icon-only" onclick="onView_home()"><i class="icon icon-back"></i></a>
+					</div>
+					<div class="center sliding">询价详情</div>
+                    <div class="right">
+						<a href="#" class="link" onclick="onViewInfo2('','{{data.jsonres_inquiry.fid}}')">新增</a>
+					</div>
+
+				</div>
+				<div class="page-content">
+					<div class="content-block-title" style="margin-top: 0px;">距离询价截止还剩</div>
+					<div class="list-block">
+						<ul>
+							<li class="item-content">
+							  <div class="item-media"><i class="icon icon-alarm"></i></div>
+							  <div class="item-inner">
+								<div class="item-title"><span id="timer" style="color: red;"></span></div>
+							  </div>
+							</li>
+						</ul>
+					</div>
+					<input type="hidden" id="end_time" name="end_time" value="{{data.jsonres_inquiry.fendtime}}"/>
+					<div class="list-block">
+						<ul>
+							<li class="item-content">
+							  <div class="item-inner">
+								<div class="item-title">询价物料</div>
+								  <div class="item-after">{{data.jsonres_inquiry.mname}}</div>
+							  </div>
+							</li>
+							<li class="item-content">
+							  <div class="item-inner">
+								<div class="item-title">交货方式</div>
+								<div class="item-after" >{{data.jsonres_inquiry.cfdeliveryway_name}}</div>
+							  </div>
+							</li>
+							<li class="item-content">
+							  <div class="item-inner">
+								<div class="item-title">交货期</div>
+								<div class="item-after" >{{data.jsonres_inquiry.cfdeliverytype_name}}</div>
+							  </div>
+							</li>
+							<li class="item-content" style="padding: 10px;">
+								<div class="card" style="margin: 0px;">
+								  <div class="card-header">质量标准</div>
+								  <div class="card-content">
+									<div class="card-content-inner" style="font-size: 15px;">{{data.jsonres_inquiry.cfqualitytext}}
+
+                                    </div>
+								  </div>
+								</div>
+							</li>
+						  </ul>
+					</div>
+					<div class="item-content">
+						{%if data.jsonres_inquiry.cfdeliverytype == "1" %}
+							{%for iline in data.jsonres_entrys %}
+
+							<div class="card">
+								<div class="card-header">{{iline.pname}}
+									<label><a href="#" class="button" onclick="onViewInfo('{{iline.fid}}', '{{data.jsonres_inquiry.fid}}')">修改报价</a></label>
+								</div>
+								<div class="card-content">
+									<div class="list-block">
+										<ul>
+											<li class="item-content">
+											  <div class="item-inner">
+												<div class="item-title">包装</div>
+												  <div class="item-after">{{iline.cfpkname}}</div>
+											  </div>
+											</li>
+											<li class="item-content">
+											  <div class="item-inner">
+												<div class="item-title">交货地报价</div>
+												  <div class="item-after">{{iline.cfprice}}</div>
+											  </div>
+											</li>
+											<li class="item-content">
+											  <div class="item-inner">
+												<div class="item-title">可供数量</div>
+												  <div class="item-after">{{iline.cfmaxqty}}({{iline.uname}})</div>
+											  </div>
+											</li>
+											<li class="item-content">
+											  <div class="item-inner">
+												<div class="item-title">报价时间</div>
+												  <div class="item-after">{{iline.cfinquirytime}}</div>
+											  </div>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+
+						    {% endfor %}
+                        {%endif%}
+						{%if data.jsonres_inquiry.cfdeliverytype == "2" %}
+							{%for gplace in data.group_places %}
+							<div class="card">
+								<div class="card-header">{{gplace.pname}}
+                                <label><a href="#" class="button" onclick="onViewInfo2('{{gplace.pid}}','{{data.jsonres_inquiry.fid}}')">继续报价</a></label>
+								</div>
+								<div class="card-content">
+									{%for iline in data.jsonres_entrys %}
+                                    {%if iline.pid == gplace.pid%}
+
+									<div class="card" style="background-color: aliceblue;">
+										<div class="card-header" style="background-color: antiquewhite;">{{iline.cfperiodid_name}}
+											<label><a href="#" class="button" onclick="onViewInfo('{{iline.fid}}','{{data.jsonres_inquiry.fid}}')">修改</a></label>
+										</div>
+										<div class="card-content">
+											<div class="list-block">
+												<ul>
+													<li class="item-content">
+													  <div class="item-inner">
+														<div class="item-title">包装</div>
+														  <div class="item-after">{{iline.cfpkname}}</div>
+													  </div>
+													</li>
+													<li class="item-content">
+													  <div class="item-inner">
+														<div class="item-title">一口价</div>
+														  <div class="item-after">{{iline.cfprice}}</div>
+													  </div>
+													</li>
+													<li class="item-content">
+													  <div class="item-inner">
+														<div class="item-title">合约/基差</div>
+
+
+														  <div class="item-after">{{iline.cftreatyid_name}}/{{iline.cfbasediff}}</div>
+
+
+													  </div>
+													</li>
+													<li class="item-content">
+													  <div class="item-inner">
+														<div class="item-title">可供数量</div>
+														  <div class="item-after">{{iline.cfmaxqty}}({{iline.uname}})</div>
+													  </div>
+													</li>
+													<li class="item-content">
+													  <div class="item-inner">
+														<div class="item-title">报价时间</div>
+														  <div class="item-after">{{iline.cfinquirytime}}</div>
+													  </div>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+                                    {% endif %}
+									{% endfor %}
+								</div>
+							</div>
+							{% endfor %}
+						{%endif%}
+
+
+						<!--{%for pline in data.place_lines %}-->
+						<!--<div class="card">-->
+							<!--<div class="card-header">{{pline.place_id.name}}-->
+								<!--<label><a href="#" class="button ripple" onclick="onViewInfo2('{{pline.place_id.id}}','{{data.inquirys.id}}')">立即报价</a></label>-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--{% endfor %}-->
+					</div>
+				</div>
+			</div>
+	 	 </div>
+	</div>

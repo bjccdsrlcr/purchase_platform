@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>温氏询价</title>
+    <link rel="stylesheet" href="/ws_purchase_supplier/static/framework7/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="/ws_purchase_supplier/static/framework7/css/framework7.ios.colors.min.css">
+    <link rel="stylesheet" href="/ws_purchase_supplier/static/supplier_src/css/base.css">
+    <link rel="stylesheet" href="/ws_purchase_supplier/static/supplier_src/css/inquiry_list.css">
+</head>
+<body>
+    <div class="statusbar-overlay"></div>
+    <div class="panel-overlay"></div>
+    <div class="views">
+        <div class="view view-main page">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="center">温氏询价列表</div>
+                </div>
+            </div>
+
+            <div class="pages navbar-through" style="top: 20px;">
+                <div data-page="home" class="page" >
+
+                    <form id="search-bar" class="searchbar" style="top: 25px">
+                        <div class="searchbar-input">
+                            <input id="search-input" type="search" placeholder="查找">
+                            <a href="#" class="searchbar-clear"></a>
+                        </div>
+                        <a href="#" class="searchbar-cancel">取消</a>
+                    </form>
+
+                    <div class="page-content pull-to-refresh-content infinite-scroll" data-distance="1" >
+
+                        <div class="pull-to-refresh-layer" style="top: 30px;">
+                        </div>
+
+                        <div id="notice-list" class="list-block virtual-list">
+
+                        </div>
+
+
+                        <div class="infinite-scroll-preloader">
+                            <div class="preloader"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script id="noticeItem" type="text/template7">
+        <a href="#" class="item-link" onclick="onView('{{ '{{fid}}' }}')">
+            <div class="item-content" >
+                <div class="item-inner">
+                  <div class = "doc-num small-size">
+                      <span >{{ '{{mname}}' }}</span>
+                  </div>
+
+                    <div class="main-body">
+                        <div class="main-title big-size">
+                            <span>交货类型：{{ '{{cfdeliverytype}}' }}</span>
+                        </div>
+
+                        <div class="main-bottom small-size">
+                            <span>交货方式：{{ '{{cfdeliveryway}}' }}</span>
+                        </div>
+                        <div class="main-bottom small-size">
+                            <span>结束时间：{{ '{{fendtime}}' }}</span>
+                        </div>
+
+                  </div>
+                </div>
+            </div>
+        </a>
+    </script>
+
+    <script type="text/javascript" src="/ws_purchase_supplier/static/framework7/js/framework7.js"></script>
+    <script type="text/javascript" src="/ws_purchase_supplier/static/src/js/odoo.js"></script>
+    <script type="text/javascript" src="/ws_purchase_supplier/static/src/js/local_storage.js"></script>
+    <script type="text/javascript" src="/ws_purchase_supplier/static/supplier_src/js/app.js"></script>
+    <script type="text/javascript" src="/ws_purchase_supplier/static/supplier_src/js/inquiry_list.js"></script>
+
+</body>
+</html>

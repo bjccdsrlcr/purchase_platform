@@ -1,0 +1,172 @@
+
+<div class="view view-main">
+	<div class="pages">
+        <div data-page="home2" class="page navbar-fixed" >
+            <div class="navbar-inner">
+                <div class="left">
+                    <a href="#" class="link icon-only" onclick="onView('{{data.jsonres_inquiry.fid}}')"><i class="icon icon-back"></i></a>
+                </div>
+                <div class="center sliding">{{data.jsonres_inquiry.mname}}询价</div>
+            </div>
+            <div class="page-content" style="padding-top: 0px;">
+                <div class="content-block-title">距离询价截止还剩</div>
+                <div class="list-block">
+                    <ul>
+                        <li class="item-content">
+                          <div class="item-media"><i class="icon icon-alarm"></i></div>
+                          <div class="item-inner">
+                            <div class="item-title"><span id="timer2" style="color: red;">  </span></div>
+                          </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <form id="inquiry_form" class="list-block" style="padding-top: 10px;">
+                    <ul>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">交货地点</div>
+                              <div class="item-input">
+
+                                  <select id="sel_trading_place_id" name="sel_trading_place_id">
+                                  <option>请选择</option>
+                                  {%for dplace in data.place_lines %}
+                                  <option id="dplace_{{dplace.id}}" value="{{dplace.id}}" {%if data.place.id == dplace.id or dplace.id == data.jsonres_entrys.pid  %} selected {% endif%}>{{dplace.fname_l2}}</option>
+                                  {% endfor %}
+                                </select>
+
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+
+
+                        <li>
+                          <div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">产地<span style="color: red">*</span></div>
+                              <div class="item-input">
+                                <select id="sel_oplace" name="sel_oplace">
+                                  <option>请选择</option>
+                                  {%for oplace in data.originPlaces %}
+                                  <option id="oplace_{{oplace.id}}" value="{{oplace.id}}"
+                                          {%if (data.jsonres_entrys.cforiginplaceid) and oplace.id == data.jsonres_entrys.cforiginplaceid %} selected {% endif%}>{{oplace.fname_l2}}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        <li>
+                          <div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">包装<span style="color: red">*</span></div>
+                              <div class="item-input">
+                                <input type="text" placeholder="请输入包装信息" id="txt_package" name="txt_package" value="{{data.jsonres_entrys.cfpkname}}" />
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                        {%if data.jsonres_inquiry.cfdeliverytype == "2" %}
+                            <li>
+                              <div class="item-content">
+                                <div class="item-inner">
+                                  <div class="item-title label">交货期<span style="color: red">*</span></div>
+                                  <div class="item-input">
+                                    <select id="sel_delivery_period_id" name="sel_delivery_period_id">
+                                      <option>请选择</option>
+                                      {%for deliperiod in data.deliperiods %}
+                                      <option id="period_{{deliperiod.id}}" value="{{deliperiod.id}}" {%if deliperiod.id == data.jsonres_entrys.cfperiodid %} selected {% endif%}>{{deliperiod.fnumber}}</option>
+                                      {% endfor %}
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="item-content">
+                                <div class="item-inner">
+                                  <div class="item-title label">一口价<span style="color: red">*</span></div>
+                                  <div class="item-input">
+                                    <input type="text" placeholder="请输入数字" id="txt_out_price" name="txt_out_price" value="{{data.jsonres_entrys.cfquotedprice}}" />
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="item-content">
+                                <div class="item-inner">
+                                  <div class="item-title label">合约<span style="color: red">*</span></div>
+                                  <div class="item-input">
+                                    <select id="sel_contract_num_id" name="sel_contract_num_id">
+                                      <option value="">请选择</option>
+                                      {%for contract in data.contract_nums %}
+                                      <option id="contract_{{contract.id}}" value="{{contract.id}}" {%if contract.id == data.jsonres_entrys.cftreatyid %} selected {% endif%}>{{contract.fname_l2}}</option>
+                                      {% endfor %}
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="item-content">
+                                <div class="item-inner">
+                                  <div class="item-title label">基差<span style="color: red">*</span></div>
+                                  <div class="item-input">
+                                    <input type="text" placeholder="请输入数字" id="txt_basediff" name="txt_basediff" value="{{data.jsonres_entrys.cfbasediff}}" />
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="item-content" style="color: red;">
+                                注：一口价和基差可任选一个，也可都填写
+                              </div>
+                            </li>
+                        {%else%}
+                            <li>
+                              <div class="item-content">
+                                <div class="item-inner">
+                                  <div class="item-title label">交货地报价<span style="color: red">*</span></div>
+                                  <div class="item-input">
+                                    <input type="text" placeholder="请输入数字" id="txt_out_price" name="txt_out_price" value="{{data.jsonres_entrys.cfquotedprice}}" />
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                        {%endif%}
+
+                        <li>
+                          <div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">可供数量({{data.jsonres_inquiry.unitname}})<span style="color: red">*</span></div>
+                              <div class="item-input">
+                                <input type="text" placeholder="请输入数字" id="txt_amount" name="txt_amount" value="{{data.jsonres_entrys.cfmaxqty}}" />
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+
+                        <li class="align-top">
+                          <div class="item-content">
+                            <div class="item-inner">
+                              <div class="item-title label">说明</div>
+                              <div class="item-input">
+                                <textarea id="txt_remark" name="txt_remark">{{data.jsonres_entrys.cfremark}}</textarea>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                    </ul>
+                </form>
+
+                <div class="content-block" style="padding: 0px 0px;margin: 15px 0px 30px 0px;">
+                  <a href="#" id="btnSubmit" class="button save-storage-data ripple" onclick="onSubmit('{{data.jsonres_entrys.fid}}', '{{data.jsonres_inquiry.cfdeliverytype}}',
+                                                                                                       '{{data.jsonres_inquiry.cfdeliveryway}}', '{{data.jsonres_inquiry.cfunitid}}',
+                                                                                                       '{{data.jsonres_inquiry.fid}}')" >提交</a>
+                </div>
+            </div>
+      </div>
+	</div>
+</div>

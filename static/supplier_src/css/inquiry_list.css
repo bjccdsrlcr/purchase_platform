@@ -1,0 +1,57 @@
+.doc-num{
+    position: relative;
+    width: 20%;
+    height: 100%;
+}
+
+.main-body{
+    position: relative;
+    padding-left:10px;
+    width: 80%;
+    height:100%;
+}
+
+.main-title{
+    position: relative;
+    width: 100%;
+}
+
+.main-bottom{
+    position: relative;
+    padding-top: 5px;
+    width: 100%;
+}
+
+
+.small-size{
+    color: grey;
+    font-size: 12px;
+}
+
+.big-size{
+    color: black;
+    font-size: 15px;
+}
+
+.list-block {
+    margin: 0px 0;
+    font-size: 17px;
+}
+
+.icon.icon-alarm {
+    width: 29px;
+    height: 29px;
+    background-image: url(../img/alarm.png);
+    border-radius: 6px;
+}
+
+.list-block .item-title.label {
+    width: 40%;
+    -webkit-flex-shrink: 0;
+    -ms-flex: 0 0 auto;
+    flex-shrink: 0;
+}
+
+.item-input input:focus {
+    color: orange;
+}

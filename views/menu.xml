@@ -1,0 +1,17 @@
+
+<odoo>
+    <data>
+        <menuitem id="menu_ws_pp_pur_sol" name="供应商模块" sequence="21"/>
+
+        <menuitem id="menu_ws_pp_pur_purchaser" name="询价" parent="menu_ws_pp_pur_sol" sequence="1"/>
+        <menuitem id="menu_ws_pp_pur_provider" name="招标" parent="menu_ws_pp_pur_sol" sequence="2"/>
+        <menuitem id="menu_ws_pp_pur_quotes" name="出价记录" parent="menu_ws_pp_pur_sol" sequence="3"/>
+
+        <menuitem id="menu_ws_ps_inquiry_info" name="询价单" parent="menu_ws_pp_pur_purchaser" sequence="1" action="action_ws_ps_inquiry_info"/>
+        <menuitem id="menu_ws_ps_tender_round" name="招标" parent="menu_ws_pp_pur_provider" sequence="2" action="action_ws_ps_tender_round" />
+        <menuitem id="menu_ws_ps_supplier_quotes" name="供应商出价日志" parent="menu_ws_pp_pur_quotes" sequence="2" action="action_ws_ps_supplier_quotes"/>
+
+    </data>
+
+</odoo>
+

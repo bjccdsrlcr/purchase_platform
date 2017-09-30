@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>温氏招标列表</title>
+    <style type="text/css">
+      #title{text-align:center;font-family:隶书;font-size:24px;font-weight:bold;margin-top:20px;margin-bottom:30px}
+      #bt_attend{margin-top:50px;}
+    </style>
+	<link rel="stylesheet" href="/ws_purchase_supplier/static/css/bootstrap.css">
+</head>
+<body>
+<div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div id="title" align="center">温氏招标列表</div>
+			{%for obj in data%}
+			<ul class="list-group" id="material_inquiry_{{obj.id}}">
+				<li class="list-group-item">招标方案:{{obj.procurement_solution_id.name}}</li>
+				<li class="list-group-item">招标轮次:{{obj.name}}</li>
+				<li class="list-group-item">招标物料:
+				{%for obj1 in obj.procurement_solution_id.demand_ids%}
+					{{obj1.product_id.name}}
+				{% endfor %}
+				</li>
+				<li class="list-group-item">开始时间:{{obj.start_time}}</li>
+				<li class="list-group-item">结束时间:{{obj.end_time}}</li>
+					<li class="list-group-item"><a href="/ws/wx/provider_info?providerid={{obj.id}}">立即应标</a></li>
+			</ul>
+			{% endfor %}
+			<div id="bt_attend" align="center">
+
+			</div>
+	 	 </div>
+	</div>
+</div>
+
+<script>
+function createlist()
+{
+var list=document.getElementById("material_demand_list");
+{%for obj in data%}
+var li = document.createElement('li');
+li.setAttribute("class","list-group-item");
+var name="{{obj.name}}";
+var amount="{{obj.amount}}";
+var unit="{{obj.unit}}";
+li.innerHTML =name+"需求量为:"+amount+unit;
+list.appendChild(li);
+{% endfor %}
+}
+//createlist();
+</script>
+
+</body>
+</html>

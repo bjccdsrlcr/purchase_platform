@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="ws_ps_supplier_quotes_tree" model="ir.ui.view">
+            <field name="name">供应商报价列表视图</field>
+            <field name="model">ws.ps.supplier.quotes</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" string="编号"/>
+                    <field name="procurement_solution_id" string="对应招标方案"/>
+                    <field name="tender_round_id" string="招标轮次"/>
+                    <field name="supplier_id" string="供应商"/>
+                    <field name="material_id" string="报价物料"/>
+                    <field name="uom_id" string="计量单位"/>
+                    <field name="origin_place_id" string="产地"/>
+                    <field name="package" string="包装"/>
+                    <field name="delivery_period_id" string="交货期"/>
+                    <field name="trading_place_id" string="交货地点"/>
+                    <field name="basediff" string="基差"/>
+                    <field name="out_price" string="出厂单价"/>
+                    <field name="in_price" string="到厂单价"/>
+                    <field name="tran_cost" string="运费"/>
+                    <field name="amount" string="最大可供数量"/>
+                    <field name="ranking" string="本轮排名"/>
+                    <field name="bidder" string="是否中标"/>
+                    <field name="inquiry_time" string="报价时间"/>
+                    <field name="quotes_type" string="报价类型"/>
+                    <field name="remark" string="备注"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_ws_ps_supplier_quotes" model="ir.actions.act_window">
+            <field name="name">供应商报价单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ws.ps.supplier.quotes</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ws_ps_supplier_quotes_tree" />
+        </record>
+    </data>
+</odoo>
